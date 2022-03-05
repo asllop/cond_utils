@@ -1,12 +1,12 @@
-/*
-number types -> between(a,b)
-all types -> in(a,b,c,d,e,...)
-*/
+//! # Condition Utils
+//! 
+//! 
 
-/// Define functions to compare if a number lies within a range.
-pub trait Between where
-    Self: PartialEq + PartialOrd + Sized + Copy {
-    
+/// Define functions to compare if a value lies within a range.
+pub trait Between
+where
+    Self: PartialEq + PartialOrd + Sized + Copy,
+{
     /// Number lies between 2 values, both included. Assumes left is smaller than right.
     fn between(&self, left: Self, right: Self) -> bool {
         return *self >= left && *self <= right;
@@ -77,3 +77,37 @@ impl Between for usize {}
 impl Between for f32 {}
 impl Between for f64 {}
 impl Between for char {}
+
+/// Define functions to compare if a value belongs to a set.
+pub trait In
+where
+    Self: PartialEq + Sized,
+{
+    /// Vector contains the value.
+    fn is_in(&self, set: &[Self]) -> bool {
+        if let Some(_) = set.iter().find(|&x| x == self) {
+            true
+        }
+        else {
+            false
+        }
+    }
+}
+
+impl In for i8 {}
+impl In for u8 {}
+impl In for i16 {}
+impl In for u16 {}
+impl In for i32 {}
+impl In for u32 {}
+impl In for i64 {}
+impl In for u64 {}
+impl In for i128 {}
+impl In for u128 {}
+impl In for isize {}
+impl In for usize {}
+impl In for f32 {}
+impl In for f64 {}
+impl In for char {}
+impl In for &str {}
+impl In for String {}
