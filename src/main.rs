@@ -10,4 +10,5 @@ fn main() {
     dbg!('g'.between('a', 'z'));
     dbg!('G'.is_in(&['A', 'G', 'z']));
     dbg!("Red".is_in(&vec!["Green", "Blue", "Grey", "Red", "Purple"]));
+    dbg!(10.in_ranges(&[0..5, 20..1999, 5..12]));
 }

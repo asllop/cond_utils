@@ -59,6 +59,8 @@
 //! }
 //! ```
 
+use std::ops::Range;
+
 /// Define functions to compare if a value lies within a range.
 pub trait Between
 where
@@ -140,11 +142,21 @@ impl Between for String {}
 /// Define functions to compare if a value belongs to a set.
 pub trait In
 where
-    Self: PartialEq + Sized,
+    Self: PartialEq + PartialOrd + Sized,
 {
     /// Array contains the value.
     fn is_in(&self, set: &[Self]) -> bool {
         if let None = set.iter().find(|&x| x == self) {
+            false
+        }
+        else {
+            true
+        }
+    }
+
+    /// Value lies between one of the ranges.
+    fn in_ranges(&self, ranges: &[Range<Self>]) -> bool {
+        if let None = ranges.iter().find(|&x| x.contains(self)) {
             false
         }
         else {
@@ -195,5 +207,6 @@ mod test {
         assert!(10.is_in(&[1, 4, 10, 0]));
         assert!('G'.is_in(&['A', 'G', 'z']));
         assert!("Red".is_in(&vec!["Green", "Blue", "Grey", "Red", "Purple"]));
+        assert!(10.in_ranges(&[0..5, 20..1999, 5..12]));
     }
 }
