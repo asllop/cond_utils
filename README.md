@@ -45,7 +45,7 @@ Or this:
 use cond_utils::In;
 
 let number = 6;
-if number.is_in(&`2,6,12`) {
+if number.is_in(&[2,6,12]) {
     println!("Number is in set");
 }
 ```
