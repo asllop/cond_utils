@@ -20,7 +20,7 @@ It is a very simple crate that provides two traits with comparation utils: `Betw
 - `&str`
 - `String`
 
-The objective of `cond_utils` is to simplify and make more legible some common tasks, specifically two: comparing if a value lies between 2 values and checking if a value is in a set. This allows to write code like:
+The objective of `cond_utils` is to simplify and make more legible some common tasks, like comparing if a value lies between 2 values or checking if a value is in a set. This allows to write code like:
 
 ```Rust
 use cond_utils::Between;
