@@ -77,19 +77,22 @@ impl Between for usize {}
 impl Between for f32 {}
 impl Between for f64 {}
 impl Between for char {}
+impl Between for &str {}
+
+//TODO: can we get rid of Copy to implement Between for String?
 
 /// Define functions to compare if a value belongs to a set.
 pub trait In
 where
     Self: PartialEq + Sized,
 {
-    /// Vector contains the value.
+    /// Array contains the value.
     fn is_in(&self, set: &[Self]) -> bool {
-        if let Some(_) = set.iter().find(|&x| x == self) {
-            true
+        if let None = set.iter().find(|&x| x == self) {
+            false
         }
         else {
-            false
+            true
         }
     }
 }

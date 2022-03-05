@@ -7,4 +7,5 @@ fn main() {
     dbg!(10.ord_between(10, 0));
     dbg!('g'.between('a', 'z'));
     dbg!('G'.is_in(&['A', 'G', 'z']));
+    dbg!("Red".is_in(&vec!["Green", "Blue", "Grey", "Red", "Purple"]));
 }
