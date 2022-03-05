@@ -130,6 +130,7 @@ mod test {
         assert!(10.ord_within(10, 1) == false);
         assert!(10.ord_rightween(10, 1) == true);
         assert!(10.ord_leftween(20, 10) == true);
+        assert!("Asllop".to_owned().between("Abc".to_owned(), "Bca".to_owned()));
     }
 
     #[test]
