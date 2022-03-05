@@ -113,3 +113,29 @@ impl In for f64 {}
 impl In for char {}
 impl In for &str {}
 impl In for String {}
+
+#[cfg(test)]
+mod test {
+    use crate::*;
+
+    #[test]
+    fn test_between() {
+        assert!(10.between(1, 20) == true);
+        assert!(10.between(1, 10) == true);
+        assert!(10.within(1, 10) == false);
+        assert!(10.rightween(1, 10) == true);
+        assert!(10.leftween(10, 20) == true);
+        assert!(10.ord_between(20, 1) == true);
+        assert!(10.ord_between(10, 1) == true);
+        assert!(10.ord_within(10, 1) == false);
+        assert!(10.ord_rightween(10, 1) == true);
+        assert!(10.ord_leftween(20, 10) == true);
+    }
+
+    #[test]
+    fn test_in() {
+        assert!(10.is_in(&[1, 4, 10, 0]));
+        assert!('G'.is_in(&['A', 'G', 'z']));
+        assert!("Red".is_in(&vec!["Green", "Blue", "Grey", "Red", "Purple"]));
+    }
+}
