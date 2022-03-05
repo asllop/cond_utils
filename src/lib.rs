@@ -1,28 +1,85 @@
 //! # Condition Utils
 //! 
+//! It is a very simple crate that provides two traits with comparation utils: [Between] and [In]. It also implements the forementioned traits for the following types:
 //! 
+//! - [i8]
+//! - [u8]
+//! - [i16]
+//! - [u16]
+//! - [i32]
+//! - [u32]
+//! - [i64]
+//! - [u64]
+//! - [i128]
+//! - [u128]
+//! - [isize]
+//! - [usize]
+//! - [f32]
+//! - [f64]
+//! - [char]
+//! - [&str]
+//! - [String]
+//! 
+//! The objective of `cond_utils` is to simplify and make more legible some common tasks, specifically two: comparing if a value lies between 2 values and checking if a value is in a set. This allows to write code like:
+//! 
+//! ```
+//! use cond_utils::Between;
+//! 
+//! let number = 6;
+//! if number.between(0,10) {
+//!     println!("Number is between 0 and 10");
+//! }
+//! ```
+//! instead of:
+//! 
+//! ```
+//! let number = 6;
+//! if number >= 0 && number <= 10 {
+//!     println!("Number is between 0 and 10");
+//! }
+//! ```
+//! 
+//! Or this:
+//! 
+//! ```
+//! use cond_utils::In;
+//! 
+//! let number = 6;
+//! if number.is_in(&[2,6,12]) {
+//!     println!("Number is in set");
+//! }
+//! ```
+//! 
+//! instead of:
+//! 
+//! ```
+//! let number = 6;
+//! if number == 2 || number == 6 || number == 12 {
+//!     println!("Number is in set");
+//! }
+//! ```
 
 /// Define functions to compare if a value lies within a range.
 pub trait Between
 where
     Self: PartialEq + PartialOrd + Sized,
 {
-    /// Number lies between 2 values, both included. Assumes left is smaller than right.
+    /// Value lies between 2 values, both included. Assumes left is smaller than right.
     fn between(&self, left: Self, right: Self) -> bool {
         *self >= left && *self <= right
     }
 
-    /// Number lies within 2 values, both excluded. Assumes left is smaller than right.
+    /// Value lies within 2 values, both excluded. Assumes left is smaller than right.
     fn within(&self, left: Self, right: Self) -> bool {
         *self > left && *self < right
     }
 
-    /// Number lies between 2 values, left included, right excluded. Assumes left is smaller than right.
+    /// Value lies between 2 values, left included, right excluded. Assumes left is smaller than right.
     fn leftween(&self, left: Self, right: Self) -> bool {
         *self >= left && *self < right
     }
 
-    /// Number lies between 2 values, right included, left excluded. Assumes left is smaller than right.
+    /// Value lies between 2 values, right included, left excluded. Assumes left is smaller than right.
     fn rightween(&self, left: Self, right: Self) -> bool {
         *self > left && *self <= right
     }
@@ -37,25 +94,25 @@ where
         }
     }
 
-    /// Number lies between 2 values, both included. If left is bigger than right, swap order.
+    /// Value lies between 2 values, both included. If left is bigger than right, swap order.
     fn ord_between(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
         self >= left && self <= right
     }
 
-    /// Number lies within 2 values, both excluded. If left is bigger than right, swap order.
+    /// Value lies within 2 values, both excluded. If left is bigger than right, swap order.
     fn ord_within(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
         self > left && self < right
     }
 
-    /// Number lies between 2 values, left included, right excluded. If left is bigger than right, swap order.
+    /// Value lies between 2 values, left included, right excluded. If left is bigger than right, swap order.
     fn ord_leftween(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
         self >= left && self < right
     }
 
-    /// Number lies between 2 values, right included, left excluded. If left is bigger than right, swap order.
+    /// Value lies between 2 values, right included, left excluded. If left is bigger than right, swap order.
     fn ord_rightween(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
         self > left && self <= right
