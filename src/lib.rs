@@ -76,3 +76,4 @@ impl Between for isize {}
 impl Between for usize {}
 impl Between for f32 {}
 impl Between for f64 {}
+impl Between for char {}
