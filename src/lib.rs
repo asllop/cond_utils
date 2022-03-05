@@ -5,7 +5,7 @@ all types -> in(a,b,c,d,e,...)
 
 /// Define functions to compare if a number lies within a range.
 pub trait Between where
-    Self: PartialEq + PartialOrd + Sized {
+    Self: PartialEq + PartialOrd + Sized + Copy {
     
     /// Number lies between 2 values, both included. Assumes left is smaller than right.
     fn between(&self, left: Self, right: Self) -> bool {
@@ -18,13 +18,47 @@ pub trait Between where
     }
 
     /// Number lies between 2 values, left included, right excluded. Assumes left is smaller than right.
-    fn left(&self, left: Self, right: Self) -> bool {
+    fn leftween(&self, left: Self, right: Self) -> bool {
         return *self >= left && *self < right;
     }
 
     /// Number lies between 2 values, right included, left excluded. Assumes left is smaller than right.
-    fn right(&self, left: Self, right: Self) -> bool {
+    fn rightween(&self, left: Self, right: Self) -> bool {
         return *self > left && *self <= right;
+    }
+
+    /// Reorder a range to accomply that left value is smaller than right.
+    fn reorder(&self, right: Self) -> (Self, Self) {
+        if *self > right {
+            (right, *self)
+        }
+        else {
+            (*self, right)
+        }
+    }
+
+    /// Number lies between 2 values, both included. If left is bigger than right, swap order.
+    fn ord_between(&self, left: Self, right: Self) -> bool {
+        let (left, right) = left.reorder(right);
+        self.between(left, right)
+    }
+
+    /// Number lies within 2 values, both excluded. If left is bigger than right, swap order.
+    fn ord_within(&self, left: Self, right: Self) -> bool {
+        let (left, right) = left.reorder(right);
+        self.within(left, right)
+    }
+
+    /// Number lies between 2 values, left included, right excluded. If left is bigger than right, swap order.
+    fn ord_leftween(&self, left: Self, right: Self) -> bool {
+        let (left, right) = left.reorder(right);
+        self.leftween(left, right)
+    }
+
+    /// Number lies between 2 values, right included, left excluded. If left is bigger than right, swap order.
+    fn ord_rightween(&self, left: Self, right: Self) -> bool {
+        let (left, right) = left.reorder(right);
+        self.rightween(left, right)
     }
 }
 
