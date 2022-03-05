@@ -5,60 +5,60 @@
 /// Define functions to compare if a value lies within a range.
 pub trait Between
 where
-    Self: PartialEq + PartialOrd + Sized + Copy,
+    Self: PartialEq + PartialOrd + Sized,
 {
     /// Number lies between 2 values, both included. Assumes left is smaller than right.
     fn between(&self, left: Self, right: Self) -> bool {
-        return *self >= left && *self <= right;
+        *self >= left && *self <= right
     }
 
     /// Number lies within 2 values, both excluded. Assumes left is smaller than right.
     fn within(&self, left: Self, right: Self) -> bool {
-        return *self > left && *self < right;
+        *self > left && *self < right
     }
 
     /// Number lies between 2 values, left included, right excluded. Assumes left is smaller than right.
     fn leftween(&self, left: Self, right: Self) -> bool {
-        return *self >= left && *self < right;
+        *self >= left && *self < right
     }
 
     /// Number lies between 2 values, right included, left excluded. Assumes left is smaller than right.
     fn rightween(&self, left: Self, right: Self) -> bool {
-        return *self > left && *self <= right;
+        *self > left && *self <= right
     }
 
     /// Reorder a range to accomply that left value is smaller than right.
-    fn reorder(&self, right: Self) -> (Self, Self) {
-        if *self > right {
-            (right, *self)
+    fn reorder<'a>(&'a self, right: &'a Self) -> (&'a Self, &'a Self) {
+        if self > right {
+            (right, self)
         }
         else {
-            (*self, right)
+            (self, right)
         }
     }
 
     /// Number lies between 2 values, both included. If left is bigger than right, swap order.
     fn ord_between(&self, left: Self, right: Self) -> bool {
-        let (left, right) = left.reorder(right);
-        self.between(left, right)
+        let (left, right) = left.reorder(&right);
+        self >= left && self <= right
     }
 
     /// Number lies within 2 values, both excluded. If left is bigger than right, swap order.
     fn ord_within(&self, left: Self, right: Self) -> bool {
-        let (left, right) = left.reorder(right);
-        self.within(left, right)
+        let (left, right) = left.reorder(&right);
+        self > left && self < right
     }
 
     /// Number lies between 2 values, left included, right excluded. If left is bigger than right, swap order.
     fn ord_leftween(&self, left: Self, right: Self) -> bool {
-        let (left, right) = left.reorder(right);
-        self.leftween(left, right)
+        let (left, right) = left.reorder(&right);
+        self >= left && self < right
     }
 
     /// Number lies between 2 values, right included, left excluded. If left is bigger than right, swap order.
     fn ord_rightween(&self, left: Self, right: Self) -> bool {
-        let (left, right) = left.reorder(right);
-        self.rightween(left, right)
+        let (left, right) = left.reorder(&right);
+        self > left && self <= right
     }
 }
 
@@ -78,8 +78,7 @@ impl Between for f32 {}
 impl Between for f64 {}
 impl Between for char {}
 impl Between for &str {}
-
-//TODO: can we get rid of Copy to implement Between for String?
+impl Between for String {}
 
 /// Define functions to compare if a value belongs to a set.
 pub trait In
