@@ -39,7 +39,7 @@
 //! }
 //! ```
 //! 
-//! Or this:
+//! This:
 //! 
 //! ```
 //! use cond_utils::In;
@@ -56,6 +56,26 @@
 //! let number = 6;
 //! if number == 2 || number == 6 || number == 12 {
 //!     println!("Number is in set");
+//! }
+//! ```
+//! 
+//! Or this:
+//! 
+//! ```
+//! use cond_utils::In;
+//! 
+//! let number = 6;
+//! if number.in_ranges(&[0..5,10..100]) {
+//!     println!("Number is between 0 and 5 or between 10 and 100");
+//! }
+//! ```
+//! 
+//! instead of:
+//! 
+//! ```
+//! let number = 6;
+//! if (number >= 0 && number <= 5) || (number >= 10 && number <= 100) {
+//!     println!("Number is between 0 and 5 or between 10 and 100");
 //! }
 //! ```
 
