@@ -66,7 +66,7 @@
 //! 
 //! let number = 6;
 //! if number.in_ranges(&[0..5, 10..100]) {
-//!     println!("Number is between 0 and 5 or between 10 and 100");
+//!     println!("Number is between 0 and 5 or between 10 and 100, limits included");
 //! }
 //! ```
 //! 
@@ -75,13 +75,13 @@
 //! ```
 //! let number = 6;
 //! if (number >= 0 && number <= 5) || (number >= 10 && number <= 100) {
-//!     println!("Number is between 0 and 5 or between 10 and 100");
+//!     println!("Number is between 0 and 5 or between 10 and 100, limits included");
 //! }
 //! ```
 
 use std::ops::Range;
 
-/// Define functions to compare if a value lies within a range.
+/// Define functions to compare if a value belongs to range.
 pub trait Between
 where
     Self: PartialEq + PartialOrd + Sized,
@@ -91,8 +91,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.between(0,11));
-    /// assert!(10.between(0,10) == false);
+    /// assert!(10.between(0, 11));
+    /// assert!(10.between(0, 10) == false);
     /// ```
     fn between(&self, left: Self, right: Self) -> bool {
         *self > left && *self < right
@@ -103,8 +103,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(5.within(0,10));
-    /// assert!(6.within(0,5) == false);
+    /// assert!(5.within(0, 10));
+    /// assert!(6.within(0, 5) == false);
     /// ```
     fn within(&self, left: Self, right: Self) -> bool {
         *self >= left && *self <= right
@@ -115,8 +115,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(0.leftween(0,10));
-    /// assert!(10.leftween(0,10) == false);
+    /// assert!(0.leftween(0, 10));
+    /// assert!(10.leftween(0, 10) == false);
     /// ```
     fn leftween(&self, left: Self, right: Self) -> bool {
         *self >= left && *self < right
@@ -127,8 +127,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.rightween(0,10));
-    /// assert!(0.rightween(0,10) == false);
+    /// assert!(10.rightween(0, 10));
+    /// assert!(0.rightween(0, 10) == false);
     /// ```
     fn rightween(&self, left: Self, right: Self) -> bool {
         *self > left && *self <= right
@@ -149,8 +149,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.ord_between(11,0));
-    /// assert!(10.ord_between(10,0) == false);
+    /// assert!(10.ord_between(11, 0));
+    /// assert!(10.ord_between(10, 0) == false);
     /// ```
     fn ord_between(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
@@ -162,8 +162,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(5.ord_within(10,0));
-    /// assert!(6.ord_within(5,0) == false);
+    /// assert!(5.ord_within(10, 0));
+    /// assert!(6.ord_within(5, 0) == false);
     /// ```
     fn ord_within(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
@@ -175,8 +175,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(0.ord_leftween(10,0));
-    /// assert!(10.ord_leftween(10,0) == false);
+    /// assert!(0.ord_leftween(10, 0));
+    /// assert!(10.ord_leftween(10, 0) == false);
     /// ```
     fn ord_leftween(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
@@ -188,8 +188,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.ord_rightween(10,0));
-    /// assert!(0.ord_rightween(10,0) == false);
+    /// assert!(10.ord_rightween(10, 0));
+    /// assert!(0.ord_rightween(10, 0) == false);
     /// ```
     fn ord_rightween(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
@@ -225,8 +225,8 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.is_in(&[0,10,100]));
-    /// assert!(10.is_in(&[0,100]) == false);
+    /// assert!(10.is_in(&[0, 10, 100]));
+    /// assert!(10.is_in(&[0, 100]) == false);
     /// ```
     fn is_in(&self, set: &[Self]) -> bool {
         if let None = set.iter().find(|&x| x == self) {
@@ -242,7 +242,7 @@ where
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.in_ranges(&[0..5,10..100]));
+    /// assert!(10.in_ranges(&[0..5, 10..100]));
     /// assert!(10.in_ranges(&[100..1000]) == false);
     /// ```
     fn in_ranges(&self, ranges: &[Range<Self>]) -> bool {
