@@ -86,28 +86,28 @@ pub trait Between
 where
     Self: PartialEq + PartialOrd + Sized,
 {
-    /// Value lies between 2 values, both included. Assumes left is smaller than right.
+    /// Value lies between 2 values, both excluded. Assumes left is smaller than right.
     /// 
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.between(0,10));
-    /// assert!(10.between(0,9) == false);
+    /// assert!(10.between(0,11));
+    /// assert!(10.between(0,10) == false);
     /// ```
     fn between(&self, left: Self, right: Self) -> bool {
-        *self >= left && *self <= right
+        *self > left && *self < right
     }
 
-    /// Value lies within 2 values, both excluded. Assumes left is smaller than right.
+    /// Value lies within 2 values, both included. Assumes left is smaller than right.
     /// 
     /// Example:
     /// ```
     /// # use cond_utils::*;
     /// assert!(5.within(0,10));
-    /// assert!(5.within(0,5) == false);
+    /// assert!(6.within(0,5) == false);
     /// ```
     fn within(&self, left: Self, right: Self) -> bool {
-        *self > left && *self < right
+        *self >= left && *self <= right
     }
 
     /// Value lies between 2 values, left included, right excluded. Assumes left is smaller than right.
@@ -144,30 +144,30 @@ where
         }
     }
 
-    /// Value lies between 2 values, both included. If left is bigger than right, swap order.
+    /// Value lies between 2 values, both excluded. If left is bigger than right, swap order.
     /// 
     /// Example:
     /// ```
     /// # use cond_utils::*;
-    /// assert!(10.ord_between(10,0));
-    /// assert!(10.ord_between(9,0) == false);
+    /// assert!(10.ord_between(11,0));
+    /// assert!(10.ord_between(10,0) == false);
     /// ```
     fn ord_between(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
-        self >= left && self <= right
+        self > left && self < right
     }
 
-    /// Value lies within 2 values, both excluded. If left is bigger than right, swap order.
+    /// Value lies within 2 values, both included. If left is bigger than right, swap order.
     /// 
     /// Example:
     /// ```
     /// # use cond_utils::*;
     /// assert!(5.ord_within(10,0));
-    /// assert!(5.ord_within(5,0) == false);
+    /// assert!(6.ord_within(5,0) == false);
     /// ```
     fn ord_within(&self, left: Self, right: Self) -> bool {
         let (left, right) = left.reorder(&right);
-        self > left && self < right
+        self >= left && self <= right
     }
 
     /// Value lies between 2 values, left included, right excluded. If left is bigger than right, swap order.
@@ -237,7 +237,7 @@ where
         }
     }
 
-    /// Value lies between one of the ranges.
+    /// Value lies within one of the ranges.
     /// 
     /// Example:
     /// ```
@@ -280,13 +280,13 @@ mod test {
     #[test]
     fn test_between() {
         assert!(10.between(1, 20) == true);
-        assert!(10.between(1, 10) == true);
-        assert!(10.within(1, 10) == false);
+        assert!(10.between(1, 10) == false);
+        assert!(10.within(1, 10) == true);
         assert!(10.rightween(1, 10) == true);
         assert!(10.leftween(10, 20) == true);
         assert!(10.ord_between(20, 1) == true);
-        assert!(10.ord_between(10, 1) == true);
-        assert!(10.ord_within(10, 1) == false);
+        assert!(10.ord_between(10, 1) == false);
+        assert!(10.ord_within(10, 1) == true);
         assert!(10.ord_rightween(10, 1) == true);
         assert!(10.ord_leftween(20, 10) == true);
         assert!("Asllop".to_owned().between("Abc".to_owned(), "Bca".to_owned()));
