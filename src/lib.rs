@@ -1,24 +1,6 @@
 //! # Condition Utils
 //! 
-//! It is a very simple crate that provides two traits with comparation utils: [Between] and [In]. It also implements the forementioned traits for the following types:
-//! 
-//! - [i8]
-//! - [u8]
-//! - [i16]
-//! - [u16]
-//! - [i32]
-//! - [u32]
-//! - [i64]
-//! - [u64]
-//! - [i128]
-//! - [u128]
-//! - [isize]
-//! - [usize]
-//! - [f32]
-//! - [f64]
-//! - [char]
-//! - [&str]
-//! - [String]
+//! It is a very simple crate that provides two traits with comparation utils: [Between] and [In].
 //! 
 //! The objective of `cond_utils` is to simplify and make more legible some common tasks, like comparing if a value lies between 2 values or checking if a value is in a set. This allows to write code like:
 //! 
@@ -197,24 +179,6 @@ where
     }
 }
 
-impl Between for i8 {}
-impl Between for u8 {}
-impl Between for i16 {}
-impl Between for u16 {}
-impl Between for i32 {}
-impl Between for u32 {}
-impl Between for i64 {}
-impl Between for u64 {}
-impl Between for i128 {}
-impl Between for u128 {}
-impl Between for isize {}
-impl Between for usize {}
-impl Between for f32 {}
-impl Between for f64 {}
-impl Between for char {}
-impl Between for &str {}
-impl Between for String {}
-
 /// Define functions to compare if a value belongs to a set.
 pub trait In
 where
@@ -255,23 +219,8 @@ where
     }
 }
 
-impl In for i8 {}
-impl In for u8 {}
-impl In for i16 {}
-impl In for u16 {}
-impl In for i32 {}
-impl In for u32 {}
-impl In for i64 {}
-impl In for u64 {}
-impl In for i128 {}
-impl In for u128 {}
-impl In for isize {}
-impl In for usize {}
-impl In for f32 {}
-impl In for f64 {}
-impl In for char {}
-impl In for &str {}
-impl In for String {}
+impl<T> Between for T where T: PartialEq + PartialOrd + Sized {}
+impl<T> In for T where T: PartialEq + PartialOrd + Sized {}
 
 #[cfg(test)]
 mod test {
@@ -290,6 +239,7 @@ mod test {
         assert!(10.ord_rightween(10, 1) == true);
         assert!(10.ord_leftween(20, 10) == true);
         assert!("Asllop".to_owned().between("Abc".to_owned(), "Bca".to_owned()));
+        assert!(Box::new(10).between(Box::new(5), Box::new(15)) == true);
     }
 
     #[test]
