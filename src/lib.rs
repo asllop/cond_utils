@@ -26,7 +26,7 @@
 //! use cond_utils::Between;
 //! 
 //! let number = 6;
-//! if number.between(0,10) {
+//! if number.between(0, 10) {
 //!     println!("Number is between 0 and 10");
 //! }
 //! ```
@@ -34,7 +34,7 @@
 //! 
 //! ```
 //! let number = 6;
-//! if number >= 0 && number <= 10 {
+//! if number > 0 && number < 10 {
 //!     println!("Number is between 0 and 10");
 //! }
 //! ```
@@ -45,7 +45,7 @@
 //! use cond_utils::In;
 //! 
 //! let number = 6;
-//! if number.is_in(&[2,6,12]) {
+//! if number.is_in(&[2, 6, 12]) {
 //!     println!("Number is in set");
 //! }
 //! ```
@@ -65,7 +65,7 @@
 //! use cond_utils::In;
 //! 
 //! let number = 6;
-//! if number.in_ranges(&[0..5,10..100]) {
+//! if number.in_ranges(&[0..5, 10..100]) {
 //!     println!("Number is between 0 and 5 or between 10 and 100");
 //! }
 //! ```
