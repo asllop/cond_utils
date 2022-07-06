@@ -60,6 +60,8 @@
 //!     println!("Number is between 0 and 5 or between 10 and 100, limits included");
 //! }
 //! ```
+//! 
+//! It works with any type that implements [PartialEq], [PartialOrd], and [Sized] traits.
 
 use std::ops::Range;
 

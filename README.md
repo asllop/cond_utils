@@ -60,3 +60,5 @@ if (number >= 0 && number <= 5) || (number >= 10 && number <= 100) {
     println!("Number is between 0 and 5 or between 10 and 100");
 }
 ```
+
+It works with any type that implements `PartialEq`, `PartialOrd`, and `Sized` traits.
