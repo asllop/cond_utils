@@ -1,8 +1,8 @@
 # Condition Utils
 
-It is a very simple crate that provides two traits with comparation utils: `Between` and `In`.
+`cond_utils` is a very simple crate that provides two traits with comparation utils: `Between` and `In`.
 
-The objective of `cond_utils` is to simplify and make more legible some common tasks, like comparing if a value lies between 2 values or checking if a value is in a set. This allows to write code like:
+The objective of `cond_utils` is to simplify and make more legible some common tasks, like comparing if a value lies between two limits, or checking if a value is in a set. This allows us to write code like:
 
 ```Rust
 use cond_utils::Between;
@@ -61,4 +61,4 @@ if (number >= 0 && number <= 5) || (number >= 10 && number <= 100) {
 }
 ```
 
-It works with any type that implements `PartialEq`, `PartialOrd`, and `Sized` traits.
+It works with any type that implements `PartialEq` + `PartialOrd` + `Sized` traits.
