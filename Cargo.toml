@@ -3,6 +3,7 @@ name = "cond_utils"
 version = "0.1.0"
 edition = "2021"
 authors = ["Andreu Santaren Llop <andreu.santaren@gmail.com>"]
+categories = ["no-std"]
 description = "Simple crate for range and set comparison utils."
 license = "MIT"
 repository = "https://github.com/asllop/cond_utils"
@@ -11,3 +12,6 @@ keywords = ["condition", "utils", "comparison", "range", "set"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[[example]]
+name = "demo"
