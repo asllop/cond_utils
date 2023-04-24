@@ -63,7 +63,8 @@
 //! 
 //! It works with any type that implements [PartialEq] + [PartialOrd] + [Sized] traits.
 
-use std::ops::Range;
+#![no_std]
+use core::ops::Range;
 
 /// Define functions to compare if a value belongs to range.
 pub trait Between
@@ -223,6 +224,3 @@ where
 
 impl<T> Between for T where T: PartialEq + PartialOrd + Sized {}
 impl<T> In for T where T: PartialEq + PartialOrd + Sized {}
-
-#[cfg(test)]
-mod tests;

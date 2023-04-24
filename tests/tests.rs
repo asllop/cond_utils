@@ -1,4 +1,4 @@
-use crate::*;
+use cond_utils::{Between, In};
 
 #[test]
 fn test_between() {
@@ -14,14 +14,16 @@ fn test_between() {
     assert!(10.ord_within(10, 1) == true);
     assert!(10.ord_rightween(10, 1) == true);
     assert!(10.ord_leftween(20, 10) == true);
-    assert!("Asllop".to_owned().between("Abc".to_owned(), "Bca".to_owned()));
     assert!("Asllop".between("Abc", "Bca"));
     assert!(Box::new(10).between(Box::new(5), Box::new(15)) == true);
+    assert!("Asllop"
+        .to_owned()
+        .between("Abc".to_owned(), "Bca".to_owned()));
 }
 
 struct Complex {
     real: f64,
-    imag: f64
+    imag: f64,
 }
 
 impl Complex {
@@ -41,7 +43,7 @@ impl PartialEq for Complex {
 }
 
 impl PartialOrd for Complex {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+    fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
         self.module().partial_cmp(&other.module())
     }
 }
@@ -49,7 +51,9 @@ impl PartialOrd for Complex {
 #[test]
 fn test_custom_type() {
     assert!(Complex::new(1.0, 1.0).between(Complex::new(0.0, 1.0), Complex::new(2.0, 2.0)) == true);
-    assert!(Complex::new(1.0, 1.0).between(Complex::new(0.0, 1.0), Complex::new(1.0, 1.0)) == false);
+    assert!(
+        Complex::new(1.0, 1.0).between(Complex::new(0.0, 1.0), Complex::new(1.0, 1.0)) == false
+    );
     assert!(Complex::new(1.0, 1.0).within(Complex::new(0.0, 1.0), Complex::new(1.0, 1.0)) == true);
 }
 
