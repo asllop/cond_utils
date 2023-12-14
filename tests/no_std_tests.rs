@@ -2,8 +2,8 @@
 
 extern crate alloc;
 
+use alloc::{borrow::ToOwned, boxed::Box, vec};
 use cond_utils::*;
-use alloc::{vec, borrow::ToOwned, boxed::Box};
 
 #[test]
 fn test_between() {
